@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+              integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+              crossorigin="anonymous">
+        <title>{{title}}</title>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <h1 class="navbar-brand" >Миссия Колонизация Марса</h1>
+                <span class="navbar-text">
+                    Mars One
+                </span>
+            </div>
+            </nav>
+            <div class="text-center">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </body>
+</html>
