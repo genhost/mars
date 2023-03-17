@@ -163,8 +163,62 @@ def news_delete(id):
     return redirect("/")
 
 
+def register_colonists():
+    CAPTAIN = {
+        "surname": "Scott",
+        "name": "Ridley",
+        "age": 21,
+        "position": "captain",
+        "speciality": "research engineer",
+        "address": "module_1",
+        "email": "scott_chief@mars.org",
+    }
+    COLONISTS = (
+        {
+            "surname": "Nick",
+            "name": "Valentine",
+            "age": 35,
+            "position": "low",
+            "speciality": "cleaner",
+            "address": "module_5",
+            "email": "nick_valley@mars.org",
+        },
+        {
+            "surname": "Elon",
+            "name": "Musk",
+            "age": 51,
+            "position": "high",
+            "speciality": "business man",
+            "address": "module_7",
+            "email": "elon_musk@mars.org",
+        },
+        {
+            "surname": "Tony",
+            "name": "Stark",
+            "age": 45,
+            "position": "captain helper",
+            "speciality": "tech engineer",
+            "address": "module_4",
+            "email": "tony_stark@mars.org",
+        },
+    )
+
+    db_sess = db_session.create_session()
+
+    captain = User(**CAPTAIN)
+    db_sess.add(captain)
+
+    for colonist in COLONISTS:
+        db_sess.add(User(**colonist))
+
+    db_sess.commit()
+
+
 def main():
     db_session.global_init(DB_PATH)
+
+    register_colonists()
+
     app.run()
 
 
