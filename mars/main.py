@@ -1,5 +1,6 @@
 from data import db_session
 from data.news import News
+from data.jobs import Jobs
 from data.users import User
 
 from forms.user import RegisterForm, LoginForm
@@ -13,6 +14,7 @@ from flask_login import (
     logout_user,
     login_user,
 )
+
 
 DB_PATH = "/".join(__file__.split("/")[:-2]) + "/db/blogs.db"
 
@@ -163,6 +165,10 @@ def news_delete(id):
     return redirect("/")
 
 
+def row_exists(model, **kwargs):
+    return db_session.create_session().query(model).filter_by(**kwargs).count() != 0
+
+
 def register_colonists():
     CAPTAIN = {
         "surname": "Scott",
@@ -205,19 +211,35 @@ def register_colonists():
 
     db_sess = db_session.create_session()
 
-    captain = User(**CAPTAIN)
-    db_sess.add(captain)
+    if not row_exists(User, **CAPTAIN):
+        db_sess.add(User(**CAPTAIN))
 
     for colonist in COLONISTS:
-        db_sess.add(User(**colonist))
+        if not row_exists(User, **colonist):
+            db_sess.add(User(**colonist))
 
     db_sess.commit()
+
+
+def create_initial_job():
+    JOB = {
+        "team_leader": 1,
+        "job": "deployment of residential modules 1 and 2",
+        "work_size": 15,
+        "collaborators": "2, 3",
+        "is_finished": False,
+    }
+    db_sess = db_session.create_session()
+    if not row_exists(Jobs, **JOB):
+        db_sess.add(Jobs(**JOB))
+        db_sess.commit()
 
 
 def main():
     db_session.global_init(DB_PATH)
 
     register_colonists()
+    create_initial_job()
 
     app.run()
 
