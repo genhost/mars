@@ -14,6 +14,8 @@ from flask_login import (
     login_user,
 )
 
+DB_PATH = "/".join(__file__.split("/")[:-2]) + "/db/blogs.db"
+
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "yandexlyceum_secret_key"
 
@@ -150,9 +152,6 @@ def news_delete(id):
     else:
         abort(404)
     return redirect("/")
-
-
-DB_PATH = "/".join(__file__.split("/")[:-2]) + "/db/blogs.db"
 
 
 def main():
