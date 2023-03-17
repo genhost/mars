@@ -11,6 +11,8 @@ sqlalchemy = "^2.0.6"
 flask = "^2.2.3"
 flask-wtf = "^1.1.1"
 flask-login = "^0.6.2"
+sqlalchemy-serializer = "^1.4.1"
+flask-sqlalchemy = "^3.0.3"
 
 
 [build-system]

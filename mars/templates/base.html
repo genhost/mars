@@ -12,12 +12,21 @@
     <body>
         <div class="container-fluid">
             <nav class="navbar bg-body-tertiary">
-            <div class="container-fluid">
-                <h1 class="navbar-brand" >Миссия Колонизация Марса</h1>
-                <span class="navbar-text">
-                    Mars One
-                </span>
-            </div>
+                <div class="container-fluid">
+                    <h1 class="navbar-brand" ><a class="btn" href="/">Миссия Колонизация Марса</a></h1>
+                    <span class="navbar-text">
+                        Mars One
+                    </span>
+
+                    {% if current_user.is_authenticated %}
+                        <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
+                    {% else %}
+                        <p>
+                            <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
+                            <a class="btn btn-success" href="/login">Войти</a>
+                        </p>
+                    {% endif %}
+                </div>
             </nav>
             <div class="container">
                 <div>
