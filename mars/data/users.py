@@ -1,5 +1,6 @@
 import datetime
-import sqlalchemy
+import sqlalchemy as sa
+
 from sqlalchemy import orm
 from flask_login import UserMixin
 from .db_session import SqlAlchemyBase
@@ -9,12 +10,16 @@ from werkzeug.security import generate_password_hash, check_password_hash
 class User(SqlAlchemyBase, UserMixin):
     __tablename__ = "users"
 
-    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
-    name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    about = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    email = sqlalchemy.Column(sqlalchemy.String, index=True, unique=True, nullable=True)
-    hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    created_date = sqlalchemy.Column(sqlalchemy.DateTime, default=datetime.datetime.now)
+    id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
+    surname = sa.Column(sa.String)
+    name = sa.Column(sa.String)
+    age = sa.Column(sa.Integer)
+    position = sa.Column(sa.String)
+    speciality = sa.Column(sa.String)
+    address = sa.Column(sa.String)
+    email = sa.Column(sa.String, unique=True)
+    hashed_password = sa.Column(sa.String)
+    modified_date = sa.Column(sa.DateTime, default=datetime.datetime.now)
 
     news = orm.relationship("News", back_populates="user")
 
