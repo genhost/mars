@@ -2,10 +2,10 @@
 
 {% block content %}
 
-<h1>Записи в блоге</h1>
+<h1>Blog posts</h1>
 
 {% if current_user.is_authenticated %}
-    <a href="news" class="btn btn-secondary">Добавить новость</a>
+    <a href="news" class="btn btn-secondary">Add news</a>
 {% endif %}
 
 {% for item in news%}
@@ -17,16 +17,16 @@
         </div>
 
         <div>
-            Автор - {{item.user.name}}, Дата написания - {{item.created_date}}
+            By {{item.user.name}}, Created in {{item.created_date}}
         </div>
 
         {% if current_user.is_authenticated and current_user == item.user %}
             <div>
                 <a href="/news/{{ item.id }}" class="btn btn-warning">
-                    Изменить
+                    Edit
                 </a>
                 <a href="/news_delete/{{ item.id }}" class="btn btn-danger">
-                    Удалить
+                    Delete
                 </a>
             </div>
         {% endif %}

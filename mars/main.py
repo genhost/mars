@@ -25,9 +25,9 @@ login_manager.init_app(app)
 
 
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(id):
     db_sess = db_session.create_session()
-    return db_sess.query(User).get(user_id)
+    return db_sess.get(User, id)
 
 
 @app.route("/")
@@ -51,23 +51,32 @@ def reqister():
         if form.password.data != form.password_again.data:
             return render_template(
                 "register.html",
-                title="Регистрация",
+                title="Sign up",
                 form=form,
-                message="Пароли не совпадают",
+                message="Passwords doesn't match",
             )
         db_sess = db_session.create_session()
         if db_sess.query(User).filter(User.email == form.email.data).first():
             return render_template(
                 "register.html",
-                title="Регистрация",
+                title="Sign up",
                 form=form,
-                message="Такой пользователь уже есть",
+                message="This user exists",
             )
-        user = User(name=form.name.data, email=form.email.data, about=form.about.data)
+        user = User(
+            surname=form.surname.data,
+            name=form.name.data,
+            age=form.age.data,
+            position=form.position.data,
+            speciality=form.speciality.data,
+            address=form.address.data,
+            email=form.email.data,
+        )
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
-        return redirect("/login")
+        login_user(user)
+        return redirect("/")
     return render_template("register.html", title="Регистрация", form=form)
 
 
@@ -81,9 +90,9 @@ def login():
             login_user(user, remember=form.remember_me.data)
             return redirect("/")
         return render_template(
-            "login.html", message="Неправильный логин или пароль", form=form
+            "login.html", message="Incorrect login or password", form=form
         )
-    return render_template("login.html", title="Авторизация", form=form)
+    return render_template("login.html", title="Sign in", form=form)
 
 
 @app.route("/logout")
@@ -107,7 +116,7 @@ def add_news():
         db_sess.merge(current_user)
         db_sess.commit()
         return redirect("/")
-    return render_template("news.html", title="Добавление новости", form=form)
+    return render_template("news.html", title="Add", form=form)
 
 
 @app.route("/news/<int:id>", methods=["GET", "POST"])
@@ -138,7 +147,7 @@ def edit_news(id):
             return redirect("/")
         else:
             abort(404)
-    return render_template("news.html", title="Редактирование новости", form=form)
+    return render_template("news.html", title="Edit", form=form)
 
 
 @app.route("/news_delete/<int:id>", methods=["GET", "POST"])

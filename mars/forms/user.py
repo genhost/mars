@@ -1,7 +1,7 @@
 from wtforms import (
+    IntegerField,
     PasswordField,
     StringField,
-    TextAreaField,
     SubmitField,
     EmailField,
     BooleanField,
@@ -11,16 +11,20 @@ from wtforms.validators import DataRequired
 
 
 class RegisterForm(FlaskForm):
-    email = EmailField("Почта", validators=[DataRequired()])
-    password = PasswordField("Пароль", validators=[DataRequired()])
-    password_again = PasswordField("Повторите пароль", validators=[DataRequired()])
-    name = StringField("Имя пользователя", validators=[DataRequired()])
-    about = TextAreaField("Немного о себе")
-    submit = SubmitField("Зарегистироваться")
+    surname = StringField("Surname", validators=[DataRequired()])
+    name = StringField("Name", validators=[DataRequired()])
+    age = IntegerField("Age", validators=[DataRequired()])
+    position = StringField("Position", validators=[DataRequired()])
+    speciality = StringField("Speciality", validators=[DataRequired()])
+    address = StringField("Address", validators=[DataRequired()])
+    email = EmailField("Email", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    password_again = PasswordField("Repeat password", validators=[DataRequired()])
+    submit = SubmitField("Sign up")
 
 
 class LoginForm(FlaskForm):
-    email = StringField("Почта", validators=[DataRequired()])
-    password = PasswordField("Пароль", validators=[DataRequired()])
-    remember_me = BooleanField("Запомнить меня")
-    submit = SubmitField("Войти")
+    email = StringField("Email", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    remember_me = BooleanField("Remember me")
+    submit = SubmitField("Sign in")
